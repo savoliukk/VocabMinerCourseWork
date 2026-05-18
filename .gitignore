@@ -1,0 +1,33 @@
+# Build outputs
+**/bin/
+**/obj/
+TestResults/
+coverage/
+
+# Local .NET state
+.dotnet-home/
+
+# IDE and editor state
+.vs/
+.idea/
+.vscode/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Course workspace materials that are not part of the published app
+input/
+.obsidian/
+
+# Runtime and local data artifacts
+*.log
+*.pid
+*.db
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db

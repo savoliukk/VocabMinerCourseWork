@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vocabminer-coursework-postgres
+    environment:
+      POSTGRES_DB: vocabminer_coursework
+      POSTGRES_USER: vocabminer
+      POSTGRES_PASSWORD: vocabminer123
+    ports:
+      - "5432:5432"
+    volumes:
+      - vocabminer_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vocabminer -d vocabminer_coursework"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vocabminer_postgres_data:

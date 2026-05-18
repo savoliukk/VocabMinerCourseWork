@@ -1,0 +1,106 @@
+@VocabMinerCourseWork.Api_HostAddress = http://localhost:5152
+@SeedUserId = 11111111-1111-1111-1111-111111111111
+@SeedSourceId = 22222222-2222-2222-2222-222222222222
+@SeedSegmentId = 33333333-3333-3333-3333-333333333331
+@SeedLearningUnitId = 44444444-4444-4444-4444-444444444441
+@SeedExportId = 77777777-7777-7777-7777-777777777771
+
+GET {{VocabMinerCourseWork.Api_HostAddress}}/
+Accept: application/json
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "new.student@example.com",
+  "displayName": "New Student",
+  "password": "Password123!",
+  "nativeLanguage": "uk",
+  "targetLanguage": "en"
+}
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "student@example.com",
+  "password": "Password123!"
+}
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/content-sources
+Content-Type: application/json
+
+{
+  "userId": "{{SeedUserId}}",
+  "title": "Sample dialogue",
+  "sourceType": "PlainText",
+  "originalText": "I want to learn vocabulary from real content.\nContext makes every phrase easier to remember.",
+  "language": "en",
+  "notes": "Manual test import"
+}
+
+###
+
+GET {{VocabMinerCourseWork.Api_HostAddress}}/content-sources?userId={{SeedUserId}}
+Accept: application/json
+
+###
+
+GET {{VocabMinerCourseWork.Api_HostAddress}}/segments/content-source/{{SeedSourceId}}
+Accept: application/json
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/learning-units
+Content-Type: application/json
+
+{
+  "userId": "{{SeedUserId}}",
+  "term": "context",
+  "unitType": "Word",
+  "segmentId": "{{SeedSegmentId}}"
+}
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/learning-units/{{SeedLearningUnitId}}/explain
+Accept: application/json
+
+###
+
+GET {{VocabMinerCourseWork.Api_HostAddress}}/reviews/today/{{SeedUserId}}
+Accept: application/json
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/reviews/submit
+Content-Type: application/json
+
+{
+  "userId": "{{SeedUserId}}",
+  "learningUnitId": "{{SeedLearningUnitId}}",
+  "grade": "Good",
+  "responseTimeSeconds": 9,
+  "notes": "Remembered during manual API check."
+}
+
+###
+
+POST {{VocabMinerCourseWork.Api_HostAddress}}/exports
+Content-Type: application/json
+
+{
+  "userId": "{{SeedUserId}}",
+  "format": "Tsv"
+}
+
+###
+
+GET {{VocabMinerCourseWork.Api_HostAddress}}/exports/{{SeedExportId}}/download
+Accept: text/tab-separated-values
