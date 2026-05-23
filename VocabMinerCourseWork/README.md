@@ -12,6 +12,7 @@ and exports cards to CSV/TSV.
 - Entity Framework Core
 - Repository + Service architecture
 - Swagger for API inspection
+- Docker Compose deployment with Caddy HTTPS proxy
 
 ## Project Structure
 
@@ -28,20 +29,39 @@ VocabMinerCourseWork/
   docs/
 ```
 
-## Run PostgreSQL
+## Run with Docker Compose
 
 Docker Desktop must be running before this command:
 
 ```powershell
 cd VocabMinerCourseWork
+Copy-Item .env.example .env
 docker compose up -d
 ```
 
-Default connection string:
+The Compose stack runs:
+
+- `api` - ASP.NET Core API on the internal Docker network
+- `postgres` - PostgreSQL with a named volume
+- `caddy` - reverse proxy on ports `80` and `443`
+
+For local smoke testing through Caddy:
+
+```powershell
+Invoke-RestMethod http://localhost/
+```
+
+For the Azure VPS demo, point `vocabminer.savoliukk.pp.ua` to the VM public IP
+and open:
 
 ```text
-Host=localhost;Port=5432;Database=vocabminer_coursework;Username=vocabminer;Password=vocabminer123
+https://vocabminer.savoliukk.pp.ua/swagger
 ```
+
+Deployment details:
+
+- `docs/deploy-azure-vps.md` - Azure Free Services / Azure for Students
+- `docs/deploy-oracle-vps.md` - Oracle Cloud Always Free fallback
 
 ## Restore, Build, and Run
 
@@ -60,6 +80,12 @@ Swagger opens at:
 
 ```text
 https://localhost:<port>/swagger
+```
+
+Default local PostgreSQL connection string:
+
+```text
+Host=localhost;Port=5432;Database=vocabminer_coursework;Username=vocabminer;Password=vocabminer123
 ```
 
 The seed user is:

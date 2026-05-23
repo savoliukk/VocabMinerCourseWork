@@ -13,6 +13,7 @@ and exports cards to CSV or TSV.
 - Repository and service architecture
 - Swagger for API inspection
 - xUnit tests
+- Docker Compose deployment with Caddy HTTPS proxy
 
 ## Project Structure
 
@@ -30,13 +31,38 @@ VocabMinerCourseWork/
 VocabMinerCourseWork.Tests/
 ```
 
-## Run PostgreSQL
+## Run with Docker Compose
 
 Docker Desktop must be running before this command:
 
 ```powershell
-docker compose -f .\VocabMinerCourseWork\docker-compose.yml up -d
+Copy-Item .\VocabMinerCourseWork\.env.example .\VocabMinerCourseWork\.env
+docker compose -f .\VocabMinerCourseWork\docker-compose.yml up -d --build
 ```
+
+The Compose stack runs:
+
+- `api` - ASP.NET Core API on the internal Docker network
+- `postgres` - PostgreSQL with a named volume
+- `caddy` - reverse proxy on ports `80` and `443`
+
+For local smoke testing through Caddy:
+
+```powershell
+Invoke-RestMethod http://localhost/
+```
+
+For the public coursework demo, point `vocabminer.savoliukk.pp.ua` to the VM
+public IP and open:
+
+```text
+https://vocabminer.savoliukk.pp.ua/swagger
+```
+
+Deployment details:
+
+- `VocabMinerCourseWork/docs/deploy-azure-vps.md` - Azure Free Services / Azure for Students
+- `VocabMinerCourseWork/docs/deploy-oracle-vps.md` - Oracle Cloud Always Free fallback
 
 Default local development connection string:
 
