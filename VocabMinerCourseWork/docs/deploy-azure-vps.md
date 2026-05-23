@@ -81,10 +81,10 @@ Clone the repository and create the environment file:
 ```bash
 git clone https://github.com/savoliukk/VocabMinerCourseWork.git
 cd VocabMinerCourseWork
-cp .env.example .env
+cp VocabMinerCourseWork/.env.example VocabMinerCourseWork/.env
 ```
 
-Review `.env`. For the coursework demo, these defaults are valid:
+Review `VocabMinerCourseWork/.env`. For the coursework demo, these defaults are valid:
 
 ```text
 DOMAIN=vocabminer.savoliukk.pp.ua
@@ -98,14 +98,14 @@ If you change `POSTGRES_PASSWORD`, also update the password inside
 Build and start the stack:
 
 ```bash
-sudo docker compose up -d --build
-sudo docker compose ps
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml up -d --build
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml ps
 ```
 
 Check logs if HTTPS or migrations need time:
 
 ```bash
-sudo docker compose logs -f api postgres caddy
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml logs -f api postgres caddy
 ```
 
 ## 5. Verify the demo
@@ -139,20 +139,20 @@ Update from GitHub:
 
 ```bash
 git pull
-sudo docker compose up -d --build
-sudo docker compose logs -f api caddy
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml up -d --build
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml logs -f api caddy
 ```
 
 Stop the app without deleting database data:
 
 ```bash
-sudo docker compose down
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml down
 ```
 
 Delete containers and the local PostgreSQL volume:
 
 ```bash
-sudo docker compose down -v
+sudo docker compose -f VocabMinerCourseWork/docker-compose.yml down -v
 ```
 
 After the coursework defense, stop or delete the Azure VM and associated disk/IP
