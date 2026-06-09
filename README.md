@@ -121,7 +121,3 @@ learning units, reviews, and exports.
 - `POST /reviews/reset/{learningUnitId}`
 - `POST /exports`
 - `GET /exports/{id}/download`
-
-See `VocabMinerCourseWork/VocabMinerCourseWork.Api.http` for a manual API
-scenario and `VocabMinerCourseWork/docs/` for coursework documentation and
-screenshots.
